@@ -105,7 +105,7 @@ pipeline {
         m2 = System.currentTimeMillis()
         def durTime = groovyMethods.durationTime(m1, m2)
         def author = groovyMethods.readCommitAuthor()
-        groovyMethods.notifySlack("https://hooks.slack.com/services/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", "jenkins", [
+        groovyMethods.notifySlack("https://hooks.slack.com/services/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", "jenkins", [
         				[
         					title: "BUILD SUCCEEDED: ${service} Service with build number ${env.BUILD_NUMBER}",
         					title_link: "${env.BUILD_URL}",
@@ -134,7 +134,7 @@ pipeline {
         m2 = System.currentTimeMillis()
         def durTime = groovyMethods.durationTime(m1, m2)
         def author = groovyMethods.readCommitAuthor()
-        groovyMethods.notifySlack("https://hooks.slack.com/services/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", "jenkins", [
+        groovyMethods.notifySlack("https://hooks.slack.com/services/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", "jenkins", [
         				[
         					title: "BUILD FAILED: ${service} Service with build number ${env.BUILD_NUMBER}",
         					title_link: "${env.BUILD_URL}",
