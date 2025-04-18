@@ -34,13 +34,13 @@ pipeline {
         sh "[ -d pipeline ] || mkdir pipeline"
         dir("pipeline") {
           // Add your jenkins automation url to url field
-          git branch: 'main', credentialsId: 'github', url: ''
+          git branch: 'main', credentialsId: 'github', url: 'https://github.com/EngjellMustafa/jenkins'
           script {
             groovyMethods = load("functions.groovy")
           }
         }
-        // Add your chat review url to url field
-        git branch: 'main', credentialsId: 'github', url: ''
+
+        git branch: 'main', credentialsId: 'github', url: 'https://github.com/EngjellMustafa/reviews'
         sh 'npm install'
       }
     }
@@ -83,7 +83,8 @@ pipeline {
 
     stage("Create New Pods") {
       steps {
-        withKubeCredentials(kubectlCredentials: [[caCertificate: '', clusterName: '', contextName: '', credentialsId: '', namespace: '', serverUrl: '']]) {
+        withKubeCredentials(kubectlCredentials: [[caCertificate: '', clusterName: 'minikube', contextName: 'minikube', credentialsId: 'jenkins-k8s-token', namespace: '', serverUrl: 'https://172.22.18.25:8443']]) {
+      } {
           script {
             def pods = groovyMethods.findPodsFromName("${namespace}", "${serviceName}")
             for (podName in pods) {
@@ -103,7 +104,7 @@ pipeline {
         m2 = System.currentTimeMillis()
         def durTime = groovyMethods.durationTime(m1, m2)
         def author = groovyMethods.readCommitAuthor()
-        groovyMethods.notifySlack("", "jobber-jenkins", [
+        groovyMethods.notifySlack("https://hooks.slack.com/services/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", "jenkins", [
         				[
         					title: "BUILD SUCCEEDED: ${service} Service with build number ${env.BUILD_NUMBER}",
         					title_link: "${env.BUILD_URL}",
@@ -132,7 +133,7 @@ pipeline {
         m2 = System.currentTimeMillis()
         def durTime = groovyMethods.durationTime(m1, m2)
         def author = groovyMethods.readCommitAuthor()
-        groovyMethods.notifySlack("", "jobber-jenkins", [
+        groovyMethods.notifySlack("https://hooks.slack.com/services/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", "jenkins", [
         				[
         					title: "BUILD FAILED: ${service} Service with build number ${env.BUILD_NUMBER}",
         					title_link: "${env.BUILD_URL}",
