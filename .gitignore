@@ -13,8 +13,6 @@ lerna-debug.log*
 
 .DS_Store
 
-.npmrc
-.npmrc.*
 
 build
 
